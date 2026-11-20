@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>销售透视报表</title>
+<style>
+  body { font-family: sans-serif; margin: 24px; }
+  #report { display: none; }
+  table { border-collapse: collapse; }
+  th, td { border: 1px solid #999; padding: 4px 8px; }
+  #login-error { color: #b00; }
+</style>
+</head>
+<body>
+<div id="login-panel">
+  <form id="login-form" onsubmit="return doLogin();">
+    <input id="username" name="username" type="text" autocomplete="off">
+    <input id="password" name="password" type="password" autocomplete="off">
+    <button id="signin" type="submit">登录</button>
+  </form>
+  <p id="login-error"></p>
+</div>
+
+<div id="report">
+<h1>2026 年区域销售透视报表</h1>
+<table id="pivot">
+  <caption>区域销售明细（含小计与总计）</caption>
+  <thead>
+    <tr>
+      <th rowspan="3">区域</th><th rowspan="3">城市</th><th rowspan="3">产品</th><th rowspan="3">行类型</th>
+      <th colspan="5">2026年第一季度</th><th colspan="5">2026年第二季度</th>
+    </tr>
+    <tr>
+      <th colspan="3">销量</th><th colspan="2">退货</th>
+      <th colspan="3">销量</th><th colspan="2">退货</th>
+    </tr>
+    <tr>
+      <th>件数</th><th>目标</th><th>金额</th><th>件数</th><th>金额</th>
+      <th>件数</th><th>目标</th><th>金额</th><th>件数</th><th>金额</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr data-kind="detail">
+        <td rowspan="5">华东</td><td rowspan="3">上海</td><td>A 款</td><td>明细</td>
+        <td>1,200</td><td>1,500</td><td>36,000.50</td><td>12</td><td>360.00</td><td>1,300</td><td>1,500</td><td>39,000.00</td><td>10</td><td>300.00</td>
+      </tr>
+      <tr data-kind="detail">
+        <td>A 款</td><td>明细</td>
+        <td>300</td><td>500</td><td>9,000.00</td><td>3</td><td>90.00</td><td>300</td><td>500</td><td>9,000.00</td><td>0</td><td>0.00</td>
+      </tr>
+      <tr data-kind="detail">
+        <td>B 款</td><td>明细</td>
+        <td>450</td><td>500</td><td>13,500.00</td><td>4</td><td>120.00</td><td>450</td><td>500</td><td>13,500.00</td><td>4</td><td>120.00</td>
+      </tr>
+      <tr data-kind="detail">
+        <td rowspan="2">杭州</td><td>A 款</td><td>明细</td>
+        <td>800</td><td>900</td><td>24,000.00</td><td>8</td><td>240.00</td><td>NULL</td><td>900</td><td>NULL</td><td>4</td><td>120.00</td>
+      </tr>
+      <tr data-kind="detail">
+        <td>B 款</td><td>明细</td>
+        <td>0</td><td>100</td><td>0.00</td><td>0</td><td>0.00</td><td>150</td><td>100</td><td>4,500.25</td><td>1</td><td>30.00</td>
+      </tr>
+      <tr data-kind="subtotal">
+        <td>华东小计</td>
+        <td></td><td></td><td>小计</td>
+        <td>2,750</td><td>3,500</td><td>82,500.50</td><td>27</td><td>810.00</td><td>2,200</td><td>3,500</td><td>66,000.25</td><td>19</td><td>570.00</td>
+      </tr>
+      <tr data-kind="detail">
+        <td rowspan="4">华南</td><td rowspan="1">广州</td><td>A 款</td><td>明细</td>
+        <td>500</td><td>400</td><td>15,000.00</td><td>5</td><td>150.00</td><td>600</td><td>400</td><td>18,000.00</td><td>6</td><td>180.00</td>
+      </tr>
+      <tr data-kind="detail">
+        <td rowspan="3">深圳</td><td>A 款</td><td>明细</td>
+        <td>700</td><td>600</td><td>21,000.00</td><td>7</td><td>210.00</td><td>700</td><td>600</td><td>21,000.00</td><td>7</td><td>210.00</td>
+      </tr>
+      <tr data-kind="detail">
+        <td>B 款</td><td>明细</td>
+        <td>700</td><td>600</td><td>21,000.00</td><td>70</td><td>2,100.00</td><td>700</td><td>600</td><td>21,000.00</td><td>0</td><td>0.00</td>
+      </tr>
+      <tr data-kind="detail">
+        <td>B 款</td><td>明细</td>
+        <td>700</td><td>600</td><td>21,000.00</td><td>70</td><td>2,100.00</td><td>700</td><td>600</td><td>21,000.00</td><td>0</td><td>0.00</td>
+      </tr>
+      <tr data-kind="subtotal">
+        <td>华南小计</td>
+        <td></td><td></td><td>小计</td>
+        <td>2,600</td><td>2,200</td><td>78,000.00</td><td>152</td><td>4,560.00</td><td>2,700</td><td>2,200</td><td>81,000.00</td><td>13</td><td>390.00</td>
+      </tr>
+      <tr data-kind="grand">
+        <td>合计</td>
+        <td></td><td></td><td>总计</td>
+        <td>5,350</td><td>5,700</td><td>160,500.50</td><td>179</td><td>5,370.00</td><td>4,900</td><td>5,700</td><td>147,000.25</td><td>32</td><td>960.00</td>
+      </tr>
+  </tbody>
+</table>
+
+<table id="empty">
+  <caption>空报表</caption>
+  <thead>
+    <tr><th rowspan="2">区域</th><th rowspan="2">行类型</th><th colspan="2">2026年第一季度</th></tr>
+    <tr><th>销量件数</th><th>销量金额</th></tr>
+  </thead>
+  <tbody>
+    <tr data-kind="grand"><td>合计</td><td>总计</td><td>0</td><td>0.00</td></tr>
+  </tbody>
+</table>
+</div>
+
+<script>
+(function () {
+  var user = "analyst";
+  var pass = "s3cret-pass";
+
+  function reveal() {
+    document.getElementById("login-panel").style.display = "none";
+    document.getElementById("report").style.display = "block";
+  }
+
+  window.doLogin = function () {
+    var u = document.getElementById("username").value;
+    var p = document.getElementById("password").value;
+    var err = document.getElementById("login-error");
+    if (u === user && p === pass) {
+      err.textContent = "";
+      try { sessionStorage.setItem("pivot-demo-auth", "1"); } catch (e) { /* storage may be denied */ }
+      reveal();
+    } else {
+      err.textContent = "用户名或密码错误";
+    }
+    // Never reload the page: the fixture reveals the authenticated report in
+    // place, exactly as a single-page report would.
+    return false;
+  };
+
+  // A real authenticated site keeps the session across reloads. Here that is
+  // simulated with sessionStorage, so a navigation to the report URL after
+  // sign-in still lands on the authenticated view.
+  function restore() {
+    var authed = false;
+    try { authed = sessionStorage.getItem("pivot-demo-auth") === "1"; } catch (e) { authed = false; }
+    if (authed) { reveal(); }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", restore);
+  } else {
+    restore();
+  }
+})();
+</script>
+</body>
+</html>
